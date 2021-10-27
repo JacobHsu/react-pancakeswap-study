@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { useMemo, ReactNode } from 'react';
 import ReactDOM from 'react-dom';
+import useActiveWeb3React from './hooks/useActiveWeb3React';
+import { BLOCKED_ADDRESSES } from './config/constants';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+function Blocklist({ children }: { children: ReactNode }) {
+  const { account } = useActiveWeb3React();
+  const blocked: boolean = useMemo(
+    () => Boolean(account && BLOCKED_ADDRESSES.indexOf(account) !== -1),
+    [account]
+  );
+  if (blocked) {
+    return <div>Blocked address</div>;
+  }
+  return <>{children}</>;
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Blocklist>
+      <App />
+    </Blocklist>
   </React.StrictMode>,
   document.getElementById('root')
 );
