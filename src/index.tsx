@@ -4,6 +4,7 @@ import useActiveWeb3React from './hooks/useActiveWeb3React';
 import { BLOCKED_ADDRESSES } from './config/constants';
 import './index.css';
 import App from './App';
+import Providers from './Providers'
 import reportWebVitals from './reportWebVitals';
 
 function Blocklist({ children }: { children: ReactNode }) {
@@ -21,7 +22,9 @@ function Blocklist({ children }: { children: ReactNode }) {
 ReactDOM.render(
   <React.StrictMode>
     <Blocklist>
-      <App />
+      <Providers>
+        <App />
+      </Providers>
     </Blocklist>
   </React.StrictMode>,
   document.getElementById('root')
