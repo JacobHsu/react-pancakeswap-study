@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useCallback, useState, useEffect } from 'react'
 import { Language } from '@pancakeswap/uikit'
 import { EN, languages } from 'config/localization/languages'
 import translations from 'config/localization/translations.json'
-import { ContextApi, ProviderState } from './types'
+import { ContextApi, ContextData, ProviderState } from './types'
 import { LS_KEY, fetchLocale, getLanguageCodeFromLS } from './helpers'
 
 const initialState: ProviderState = {
@@ -25,6 +25,8 @@ export const LanguageProvider: React.FC = ({ children }) => {
       currentLanguage: languages[codeFromStorage],
     }
   })
+
+  const { currentLanguage } = state
 
   useEffect(() => {
     const fetchInitialLocales = async () => {
@@ -74,5 +76,30 @@ export const LanguageProvider: React.FC = ({ children }) => {
     }
   }
 
-  return <LanguageContext.Provider value={{ ...state, setLanguage }}>{children}</LanguageContext.Provider>
+  const translate = useCallback(
+    (key: string, data?: ContextData) => {
+      const translationSet = languageMap.has(currentLanguage.locale)
+        ? languageMap.get(currentLanguage.locale)
+        : languageMap.get(EN.locale)
+      const translatedText = translationSet[key] || key
+
+      // Check the existence of at least one combination of %%, separated by 1 or more non space characters
+      const includesVariable = translatedText.match(/%\S+?%/gm)
+
+      if (includesVariable && data) {
+        let interpolatedText = translatedText
+        Object.keys(data).forEach((dataKey) => {
+          const templateKey = new RegExp(`%${dataKey}%`, 'g')
+          interpolatedText = interpolatedText.replace(templateKey, data[dataKey].toString())
+        })
+
+        return interpolatedText
+      }
+
+      return translatedText
+    },
+    [currentLanguage],
+  )
+
+  return <LanguageContext.Provider value={{ ...state, setLanguage, t: translate }}>{children}</LanguageContext.Provider>
 }
