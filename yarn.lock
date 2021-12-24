@@ -15325,10 +15325,10 @@ npm-packlist@^1.1.6:
     npm-bundled "^1.0.1"
     npm-normalize-package-bin "^1.0.1"
 
-npm-react-uikit@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.7.tgz#48dca7080d1b07a4132859c975b239eff3cf8a41"
-  integrity sha512-ZSkNsOVChF5f8mVSPLsfGVClufB73A2RJReR1vcBk1eYrmK7zYUbLNdPpaPhgAhrs6SVHAfGNG/Cml5j81Tm6g==
+npm-react-uikit@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.12.tgz#336c13f69ec17f9ec5a95376f4857322510ed649"
+  integrity sha512-bExpeYFKew20dY9DIisVWLDsEk/Uh+Uvm6gThfAkLHeHjvKaHllimEfUhfdzAeLwth4un3D+egijHxQ7G9U0Jg==
 
 npm-run-path@^2.0.0:
   version "2.0.2"

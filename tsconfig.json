@@ -23,6 +23,7 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
   },
+  "exclude": ["node_modules", "cypress"],
   "include": [
     "./src/**/*.ts", "./src/**/*.tsx"
   ]
