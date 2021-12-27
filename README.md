@@ -11,3 +11,5 @@
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/walletconnect-connector": "^6.2.4",
 ```
+
+`yarn upgrade npm-react-uikit`
