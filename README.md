@@ -12,4 +12,5 @@
     "@web3-react/walletconnect-connector": "^6.2.4",
 ```
 
-`yarn upgrade npm-react-uikit`
+`yarn upgrade npm-react-uikit --latest`  
+`yarn add npm-react-uikit`  
