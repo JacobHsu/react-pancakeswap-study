@@ -4,22 +4,28 @@ import { ResetCSS } from 'npm-react-uikit'; // '@pancakeswap/uikit'
 import history from './routerHistory';
 import GlobalStyle from './style/Global';
 import Menu from './components/Menu';
+import SuspenseWithChunkError from './components/SuspenseWithChunkError'
+import PageLoader from './components/Loader/PageLoader'
 import './App.css';
-import Home from './views/Home';
-// const Home = lazy(() => import('./views/Home'));
+// import Home from './views/Home';
+const Home = lazy(() => import('./views/Home'));
 
 const App: React.FC = () => {
   return (
     <Router history={history}>
       <ResetCSS />
       <GlobalStyle />
-      <Menu></Menu>
+      <Menu>
+        
+      </Menu>
       {/* <Home /> */}
-      <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-      </Switch>
+      <SuspenseWithChunkError fallback={<PageLoader />}>
+        <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+        </Switch>
+      </SuspenseWithChunkError>
     </Router>
   );
 };
