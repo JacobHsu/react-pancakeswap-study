@@ -4022,11 +4022,6 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/canvas-confetti@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@types/canvas-confetti/-/canvas-confetti-1.4.2.tgz#35c99fc904492fdcc6515c742509e04f3527211c"
-  integrity sha512-t45KUDHlwrD9PJVRHc5z1SlXhO82BQEgMKUXGEV1KnWLFMPA6Y5LfUsLTHHzH9KcKDHZLEiYYH5nIDcjRKWNTg==
-
 "@types/connect@*":
   version "3.4.35"
   resolved "https://registry.yarnpkg.com/@types/connect/-/connect-3.4.35.tgz#5fcf6ae445e4021d1fc2219a4873cc73a3bb2ad1"
@@ -6962,11 +6957,6 @@ caniuse-lite@^1.0.30001271:
   version "1.0.30001272"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001272.tgz#8e9790ff995e9eb6e1f4c45cd07ddaa87cddbb14"
   integrity sha512-DV1j9Oot5dydyH1v28g25KoVm7l8MTxazwuiH3utWiAS6iL/9Nh//TGwqFEeqqN8nnWYQ8HHhUq+o4QPt9kvYw==
-
-canvas-confetti@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/canvas-confetti/-/canvas-confetti-1.4.0.tgz#840f6db4a566f8f32abe28c00dcd82acf39c92bd"
-  integrity sha512-S18o4Y9PqI/uabdlT/jI3MY7XBJjNxnfapFIkjkMwpz6qNxLFZOm2b22OMf4ZYDL9lpNWI+Ih4fEMVPwO1KHFQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -15361,10 +15351,10 @@ npm-packlist@^1.1.6:
     npm-bundled "^1.0.1"
     npm-normalize-package-bin "^1.0.1"
 
-npm-react-uikit@^1.0.31:
-  version "1.0.31"
-  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.31.tgz#410fb654de47249ef6114ec4bcb08cdb57906635"
-  integrity sha512-3WzDe0A6xS1Z6pbVEM5y2h5v0gSYvu2wHuAykucxENNaJcPhSPvb/Bl/bVgbgfAiCqGUPbipIfciOeUnyShPQw==
+npm-react-uikit@^1.0.38:
+  version "1.0.38"
+  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.38.tgz#2047465d74b6ce403ca77371d140786c6de3079c"
+  integrity sha512-5oCyEt1x0bz0akbhLksDw4P0cD7akTXFkl/EZyuu08R6jZPjQCNZS7CgFa3OwPuFzulya01/1IwjR6rhS3fA9w==
   dependencies:
     "@types/lodash" "^4.14.178"
     "@types/react-router-dom" "^5.3.2"
