@@ -16,16 +16,15 @@ const App: React.FC = () => {
       <ResetCSS />
       <GlobalStyle />
       <Menu>
-        
+        <SuspenseWithChunkError fallback={<PageLoader />}>
+          <Switch>
+            <Route path="/" exact>
+              <Home />
+            </Route>
+          </Switch>
+        </SuspenseWithChunkError>
       </Menu>
       {/* <Home /> */}
-      <SuspenseWithChunkError fallback={<PageLoader />}>
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-        </Switch>
-      </SuspenseWithChunkError>
     </Router>
   );
 };
