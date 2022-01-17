@@ -9,6 +9,7 @@ import PageLoader from './components/Loader/PageLoader'
 import './App.css';
 // import Home from './views/Home';
 const Home = lazy(() => import('./views/Home'));
+const NotFound = lazy(() => import('./views/NotFound'))
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,8 @@ const App: React.FC = () => {
             <Route path="/" exact>
               <Home />
             </Route>
+            {/* 404 */}
+            <Route component={NotFound} />
           </Switch>
         </SuspenseWithChunkError>
       </Menu>
