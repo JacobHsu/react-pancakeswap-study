@@ -15337,14 +15337,15 @@ npm-packlist@^1.1.6:
     npm-bundled "^1.0.1"
     npm-normalize-package-bin "^1.0.1"
 
-npm-react-uikit@^1.0.41:
-  version "1.0.41"
-  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.41.tgz#edf93d15c29919881e49e2754fa27170291aaad3"
-  integrity sha512-pV+7kSBsNsh3/Qaw8b31Kb+6bsLwSKo6k3HHvdm2VxeW37XpjMQzhbbykS2rda6D87IZI8wH7QkOITAoovKVSw==
+npm-react-uikit@^1.0.44:
+  version "1.0.44"
+  resolved "https://registry.yarnpkg.com/npm-react-uikit/-/npm-react-uikit-1.0.44.tgz#e2159b19ca317a059c77030d4f84463eca41ee9e"
+  integrity sha512-hPlnbNjX0KQOUWGZo1HlkN4ZN3ohOtjhb8WfzhG8o0AJxl2nOW6kxnhExxNK5YF0Cevj29si4pF6ixnbCfaI2A==
   dependencies:
     "@types/lodash" "^4.14.178"
     "@types/styled-system" "^5.1.14"
     lodash "^4.17.21"
+    react-popper "^2.2.5"
     styled-system "^5.1.5"
 
 npm-run-path@^2.0.0:
