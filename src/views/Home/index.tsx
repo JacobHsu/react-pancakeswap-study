@@ -1,10 +1,60 @@
 import React from 'react';
+import styled from 'styled-components'
+import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
+import useTheme from 'hooks/useTheme'
+import Container from 'components/Layout/Container'
+import UserBanner from './components/UserBanner'
 
-function Home() {
+const StyledHeroSection = styled(PageSection)`
+  padding-top: 16px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-top: 48px;
+  }
+`
+
+const UserBannerWrapper = styled(Container)`
+  z-index: 1;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  padding-left: 0px;
+  padding-right: 0px;
+
+  ${({ theme }) => theme.mediaQueries.lg} {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+`
+
+const Home: React.FC = () => {
+  const { theme } = useTheme()
   return (
     <>
       <PageMeta />
+      <StyledHeroSection
+        innerProps={{ style: { margin: '0', width: '100%' } }}
+        background={
+          theme.isDark
+            ? 'radial-gradient(103.12% 50% at 50% 50%, #21193A 0%, #191326 100%)'
+            : 'linear-gradient(139.73deg, #E6FDFF 0%, #F3EFFF 100%)'
+        }
+        index={2}
+        hasCurvedDivider={false}
+      >
+          <UserBannerWrapper>
+            <UserBanner />
+          </UserBannerWrapper>
+        {/* {account && (
+          <UserBannerWrapper>
+            <UserBanner />
+          </UserBannerWrapper>
+        )}
+        <Hero /> */}
+      </StyledHeroSection>
       <div className="App">
         <header className="App-header">
           <p>
