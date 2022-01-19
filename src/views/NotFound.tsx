@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Heading, Text, LogoIcon } from '@pancakeswap/uikit'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Page from 'components/Layout/Page'
 import { useTranslation } from 'contexts/Localization'
 
@@ -22,9 +22,9 @@ const NotFound = () => {
         <LogoIcon width="64px" mb="8px" />
         <Heading scale="xxl">404</Heading>
         <Text mb="16px">{t('Oops, page not found.')}</Text>
-        {/* <Button as={Link} to="/" scale="sm">
+        <Button as={Link} to="/" scale="sm">
           {t('Back Home')}
-        </Button> */}
+        </Button>
       </StyledNotFound>
     </Page>
   )
