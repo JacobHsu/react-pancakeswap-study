@@ -84,10 +84,8 @@ import { State, ProfileState, Achievement, ProfileAvatarFetchStatus } from '../t
 // }
 
 export const useProfile = () => {
-  const { isLoading }: ProfileState = useSelector((state: State) => state.profile)
-  return { isLoading }
-  // const { isInitialized, isLoading, data, hasRegistered }: ProfileState = useSelector((state: State) => state.profile)
-  // return { profile: data, hasProfile: isInitialized && hasRegistered, isInitialized, isLoading }
+  const { isInitialized, isLoading, data, hasRegistered }: ProfileState = useSelector((state: State) => state.profile)
+  return { profile: data, hasProfile: isInitialized && hasRegistered, isInitialized, isLoading }
 }
 
 // export const useGetProfileAvatar = (account: string) => {
