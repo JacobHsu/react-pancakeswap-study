@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components'
 import PageSection from 'components/PageSection'
+import { useWeb3React } from '@web3-react/core'
 import { PageMeta } from 'components/Layout/Page'
+import Hero from './components/Hero'
 import useTheme from 'hooks/useTheme'
 import Container from 'components/Layout/Container'
 import UserBanner from './components/UserBanner'
@@ -32,6 +34,7 @@ const UserBannerWrapper = styled(Container)`
 
 const Home: React.FC = () => {
   const { theme } = useTheme()
+  const { account } = useWeb3React()
   return (
     <>
       <PageMeta />
@@ -45,15 +48,12 @@ const Home: React.FC = () => {
         index={2}
         hasCurvedDivider={false}
       >
-          <UserBannerWrapper>
-            <UserBanner />
-          </UserBannerWrapper>
-        {/* {account && (
+        {account && (
           <UserBannerWrapper>
             <UserBanner />
           </UserBannerWrapper>
         )}
-        <Hero /> */}
+        <Hero />
       </StyledHeroSection>
       <div className="App">
         <header className="App-header">
