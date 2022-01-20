@@ -7,6 +7,7 @@ import Menu from './components/Menu';
 import SuspenseWithChunkError from './components/SuspenseWithChunkError'
 import PageLoader from './components/Loader/PageLoader'
 import './App.css';
+import Swap from './views/Swap'
 // import Home from './views/Home';
 const Home = lazy(() => import('./views/Home'));
 const NotFound = lazy(() => import('./views/NotFound'))
@@ -19,9 +20,12 @@ const App: React.FC = () => {
       <Menu>
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
-            <Route path="/" exact>
+            {/* <Route path="/" exact>
               <Home />
-            </Route>
+            </Route> */}
+            {/* Using this format because these components use routes injected props. We need to rework them with hooks */}
+            {/* <Route exact strict path="/swap" component={Swap} /> */}
+            <Route exact strict path="/" component={Swap} />
             {/* 404 */}
             <Route component={NotFound} />
           </Switch>
