@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../../index'
 import {
+  updateUserSlippageTolerance,
+  updateUserSingleHopOnly,
   updateUserExpertMode,
   toggleTheme as toggleThemeAction,
 } from '../actions'
@@ -33,3 +35,35 @@ export function useThemeManager(): [boolean, () => void] {
   return [isDark, toggleTheme]
 }
 
+export function useUserSingleHopOnly(): [boolean, (newSingleHopOnly: boolean) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const singleHopOnly = useSelector<AppState, AppState['user']['userSingleHopOnly']>(
+    (state) => state.user.userSingleHopOnly,
+  )
+
+  const setSingleHopOnly = useCallback(
+    (newSingleHopOnly: boolean) => {
+      dispatch(updateUserSingleHopOnly({ userSingleHopOnly: newSingleHopOnly }))
+    },
+    [dispatch],
+  )
+
+  return [singleHopOnly, setSingleHopOnly]
+}
+
+export function useUserSlippageTolerance(): [number, (slippage: number) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const userSlippageTolerance = useSelector<AppState, AppState['user']['userSlippageTolerance']>((state) => {
+    return state.user.userSlippageTolerance
+  })
+
+  const setUserSlippageTolerance = useCallback(
+    (slippage: number) => {
+      dispatch(updateUserSlippageTolerance({ userSlippageTolerance: slippage }))
+    },
+    [dispatch],
+  )
+
+  return [userSlippageTolerance, setUserSlippageTolerance]
+}

@@ -5,8 +5,11 @@ import blockReducer from './block';
 import farmsReducer from './farms'
 import profileReducer from './profile'
 import user from './user/reducer'
+import swap from './swap/reducer'
+import lists from './lists/reducer'
+import multicall from './multicall/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'profile']; // ['user', 'transactions', 'lists', 'profile'];
+const PERSISTED_KEYS: string[] = ['user', 'profile', 'lists']; // ['user', 'transactions', 'lists', 'profile'];
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
@@ -16,6 +19,9 @@ const store = configureStore({
     profile: profileReducer,
     // Exchange
     user,
+    swap,
+    lists,
+    multicall,
   },
   preloadedState: load({ states: PERSISTED_KEYS }),
 });
