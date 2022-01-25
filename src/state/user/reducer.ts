@@ -5,8 +5,10 @@ import {
   addSerializedToken,
   updateUserExpertMode,
   toggleTheme,
+  updateGasPrice,
   updateUserSingleHopOnly,
 } from './actions'
+import { GAS_PRICE_GWEI } from './hooks/helpers'
 
 export interface UserState {
   // only allow swaps on direct pairs
@@ -22,6 +24,7 @@ export interface UserState {
   }
   userExpertMode: boolean
   isDark: boolean
+  gasPrice: string
 }
 
 export const initialState: UserState = {
@@ -30,6 +33,7 @@ export const initialState: UserState = {
   userExpertMode: false,
   isDark: false,
   tokens: {},
+  gasPrice: GAS_PRICE_GWEI.default,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -51,5 +55,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateUserSingleHopOnly, (state, action) => {
       state.userSingleHopOnly = action.payload.userSingleHopOnly
+    })
+    .addCase(updateGasPrice, (state, action) => {
+      state.gasPrice = action.payload.gasPrice
     })
 )

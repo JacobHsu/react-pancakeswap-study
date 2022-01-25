@@ -1,3 +1,4 @@
+import { ChainId, Pair, Token } from '@pancakeswap/sdk'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../../index'
@@ -7,7 +8,7 @@ import {
   updateUserExpertMode,
   toggleTheme as toggleThemeAction,
 } from '../actions'
-
+import { deserializeToken, GAS_PRICE_GWEI, serializeToken } from './helpers'
 
 export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
@@ -66,4 +67,10 @@ export function useUserSlippageTolerance(): [number, (slippage: number) => void]
   )
 
   return [userSlippageTolerance, setUserSlippageTolerance]
+}
+
+export function useGasPrice(): string {
+  const chainId = process.env.REACT_APP_CHAIN_ID
+  const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
+  return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
 }

@@ -2888,13 +2888,12 @@
     tiny-warning "^1.0.3"
     toformat "^2.0.0"
 
-"@pancakeswap/uikit@^0.55.0":
-  version "0.55.0"
-  resolved "https://registry.yarnpkg.com/@pancakeswap/uikit/-/uikit-0.55.0.tgz#a783664997512d9199e87fe1cdd49627ec8dd5e6"
-  integrity sha512-JjVuJ8PnH11rDBNZalIfiRJqj/908EDoUjRVDSb0ITZD3KfR/eH9I+7g6bdbPiKyUxnNm3QWgqgqZ58zJBCL4w==
+"@pancakeswap/uikit@^0.63.1":
+  version "0.63.1"
+  resolved "https://registry.yarnpkg.com/@pancakeswap/uikit/-/uikit-0.63.1.tgz#1d0fabeb23b2fa14a02bc9a71989ce8d244293d8"
+  integrity sha512-lpw4PKwM/GRQLwp3FfBd6Tevos/n3I0N3SnHaEMUfjr/oXQcOGzIJdNeJZhZSiO7FYxIn2ClCg3+VlBCvxqV4Q==
   dependencies:
     "@popperjs/core" "^2.9.2"
-    "@types/lodash" "^4.14.168"
     "@types/styled-system" "^5.1.10"
     lodash "^4.17.20"
     react-popper "^2.2.5"
@@ -4211,11 +4210,6 @@
     "@types/keygrip" "*"
     "@types/koa-compose" "*"
     "@types/node" "*"
-
-"@types/lodash@^4.14.168":
-  version "4.14.176"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.176.tgz#641150fc1cda36fbfa329de603bbb175d7ee20c0"
-  integrity sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ==
 
 "@types/lodash@^4.14.178":
   version "4.14.178"

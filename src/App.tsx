@@ -17,7 +17,7 @@ const App: React.FC = () => {
     <Router history={history}>
       <ResetCSS />
       <GlobalStyle />
-      <Menu>
+      {/* <Menu> */}
         <SuspenseWithChunkError fallback={<PageLoader />}>
           <Switch>
             {/* <Route path="/" exact>
@@ -30,7 +30,7 @@ const App: React.FC = () => {
             <Route component={NotFound} />
           </Switch>
         </SuspenseWithChunkError>
-      </Menu>
+      {/* </Menu> */}
       {/* <Home /> */}
     </Router>
   );
