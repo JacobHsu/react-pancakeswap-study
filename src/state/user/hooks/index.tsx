@@ -7,6 +7,7 @@ import {
   updateUserSingleHopOnly,
   updateUserExpertMode,
   toggleTheme as toggleThemeAction,
+  setIsExchangeChartDisplayed,
 } from '../actions'
 import { deserializeToken, GAS_PRICE_GWEI, serializeToken } from './helpers'
 
@@ -73,4 +74,22 @@ export function useGasPrice(): string {
   const chainId = process.env.REACT_APP_CHAIN_ID
   const userGas = useSelector<AppState, AppState['user']['gasPrice']>((state) => state.user.gasPrice)
   return chainId === ChainId.MAINNET.toString() ? userGas : GAS_PRICE_GWEI.testnet
+}
+
+// Get user preference for exchange price chart
+// For mobile layout chart is hidden by default
+export function useExchangeChartManager(isMobile: boolean): [boolean, (isDisplayed: boolean) => void] {
+  const dispatch = useDispatch<AppDispatch>()
+  const isChartDisplayed = useSelector<AppState, AppState['user']['isExchangeChartDisplayed']>(
+    (state) => state.user.isExchangeChartDisplayed,
+  )
+
+  const setUserChartPreference = useCallback(
+    (isDisplayed: boolean) => {
+      dispatch(setIsExchangeChartDisplayed(isDisplayed))
+    },
+    [dispatch],
+  )
+
+  return [isMobile ? false : isChartDisplayed, setUserChartPreference]
 }

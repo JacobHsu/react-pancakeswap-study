@@ -7,6 +7,7 @@ import {
   toggleTheme,
   updateGasPrice,
   updateUserSingleHopOnly,
+  setIsExchangeChartDisplayed,
 } from './actions'
 import { GAS_PRICE_GWEI } from './hooks/helpers'
 
@@ -24,6 +25,7 @@ export interface UserState {
   }
   userExpertMode: boolean
   isDark: boolean
+  isExchangeChartDisplayed: boolean
   gasPrice: string
 }
 
@@ -32,6 +34,7 @@ export const initialState: UserState = {
   userSingleHopOnly: false,
   userExpertMode: false,
   isDark: false,
+  isExchangeChartDisplayed: true,
   tokens: {},
   gasPrice: GAS_PRICE_GWEI.default,
 }
@@ -58,5 +61,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(updateGasPrice, (state, action) => {
       state.gasPrice = action.payload.gasPrice
+    })
+    .addCase(setIsExchangeChartDisplayed, (state, { payload }) => {
+      state.isExchangeChartDisplayed = payload
     })
 )

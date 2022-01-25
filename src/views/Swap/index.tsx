@@ -1,7 +1,19 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import styled from 'styled-components'
 import { CurrencyAmount, JSBI, Token, Trade } from '@pancakeswap/sdk'
 import { RouteComponentProps } from 'react-router-dom'
-import { Button, Text, ArrowDownIcon, Box, useModal } from '@pancakeswap/uikit'
+import {
+  Button,
+  Text,
+  ArrowDownIcon,
+  Box,
+  useModal,
+  Flex,
+  IconButton,
+  BottomDrawer,
+  useMatchBreakpoints,
+  ArrowUpDownIcon,
+} from '@pancakeswap/uikit'
 import { ArrowWrapper, SwapCallbackError, Wrapper } from './components/styleds'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import Column, { AutoColumn } from '../../components/Layout/Column'
@@ -17,12 +29,47 @@ import {
   useSwapActionHandlers,
   useSwapState,
 } from '../../state/swap/hooks'
+import {
+  useExchangeChartManager,
+} from '../../state/user/hooks'
 import { useExpertModeManager, useUserSlippageTolerance } from '../../state/user/hooks'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import Page from '../Page'
+import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
+import CurrencyInputHeader from './components/CurrencyInputHeader'
+
+const Label = styled(Text)`
+  font-size: 12px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.secondary};
+`
+
+const SwitchIconButton = styled(IconButton)`
+  box-shadow: inset 0px -2px 0px rgba(0, 0, 0, 0.1);
+  .icon-up-down {
+    display: none;
+  }
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.primary};
+    .icon-down {
+      display: none;
+      fill: white;
+    }
+    .icon-up-down {
+      display: block;
+      fill: white;
+    }
+  }
+`
 
 export default function Swap({ history }: RouteComponentProps) {
+  // const router = useRouter()
+  // const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
+  const [isChartExpanded, setIsChartExpanded] = useState(false)
+  const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
+  const [isChartDisplayed, setIsChartDisplayed] = useState(userChartPreference)
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
@@ -72,12 +119,32 @@ export default function Swap({ history }: RouteComponentProps) {
     },
     [onUserInput],
   )
+  const handleTypeOutput = useCallback(
+    (value: string) => {
+      onUserInput(Field.OUTPUT, value)
+    },
+    [onUserInput],
+  )
 
   const handleMaxInput = useCallback(() => {
     if (maxAmountInput) {
       onUserInput(Field.INPUT, maxAmountInput.toExact())
     }
   }, [maxAmountInput, onUserInput])
+
+  const handleOutputSelect = useCallback(
+    (outputCurrency) => {
+      onCurrencySelection(Field.OUTPUT, outputCurrency)
+      const showSwapWarning = shouldShowSwapWarning(outputCurrency)
+      if (showSwapWarning) {
+        setSwapWarningCurrency(outputCurrency)
+      } else {
+        setSwapWarningCurrency(null)
+      }
+    },
+
+    [onCurrencySelection],
+  )
 
   // check whether the user has approved the router on the input token
   const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
@@ -119,43 +186,75 @@ export default function Swap({ history }: RouteComponentProps) {
 
   return (
     <Page>
-      <AppBody>
-        <AppHeader title={t('Exchange')} subtitle={t('Trade tokens in an instant')} />
-        <Wrapper id="swap-page">
-          <AutoColumn gap="md">
-            <CurrencyInputPanel
-                label={independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')}
-                value={formattedAmounts[Field.INPUT]}
-                showMaxButton={!atMaxAmountInput}
-                currency={currencies[Field.INPUT]}
-                onUserInput={handleTypeInput}
-                onMax={handleMaxInput}
-                onCurrencySelect={handleInputSelect}
-                otherCurrency={currencies[Field.OUTPUT]}
-                id="swap-currency-input"
-              />
-              <AutoColumn justify="space-between">
-                <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
-                  <ArrowWrapper clickable>
-                    <ArrowDownIcon
-                      width="16px"
-                      onClick={() => {
-                        setApprovalSubmitted(false) // reset 2 step UI for approvals
-                        onSwitchTokens()
-                      }}
-                      color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
-                    />
-                  </ArrowWrapper>
-                  {recipient === null && !showWrap && isExpertMode ? (
-                    <Button variant="text" id="add-recipient-button" onClick={() => onChangeRecipient('')}>
-                      {t('+ Add a send (optional)')}
-                    </Button>
-                  ) : null}
-                </AutoRow>
-              </AutoColumn>
-            </AutoColumn>
-        </Wrapper>
-      </AppBody>
+      <Flex width="100%" justifyContent="center" position="relative">
+        <Flex flexDirection="column">
+            <StyledSwapContainer $isChartExpanded={isChartExpanded}>
+              <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
+                <AppBody>
+                  <CurrencyInputHeader
+                    title={t('Swap')}
+                    subtitle={t('Trade tokens in an instant')}
+                    setIsChartDisplayed={setIsChartDisplayed}
+                    isChartDisplayed={isChartDisplayed}
+                  />
+                  <Wrapper id="swap-page" style={{ minHeight: '412px' }}>
+                    <AutoColumn gap="sm">
+                      <CurrencyInputPanel
+                        label={
+                          independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')
+                        }
+                        value={formattedAmounts[Field.INPUT]}
+                        showMaxButton={!atMaxAmountInput}
+                        currency={currencies[Field.INPUT]}
+                        onUserInput={handleTypeInput}
+                        onMax={handleMaxInput}
+                        onCurrencySelect={handleInputSelect}
+                        otherCurrency={currencies[Field.OUTPUT]}
+                        id="swap-currency-input"
+                      />
+                      <AutoColumn justify="space-between">
+                        <AutoRow justify={isExpertMode ? 'space-between' : 'center'} style={{ padding: '0 1rem' }}>
+                          <SwitchIconButton
+                            variant="light"
+                            scale="sm"
+                            onClick={() => {
+                              setApprovalSubmitted(false) // reset 2 step UI for approvals
+                              onSwitchTokens()
+                            }}
+                          >
+                            <ArrowDownIcon
+                              className="icon-down"
+                              color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
+                            />
+                            <ArrowUpDownIcon
+                              className="icon-up-down"
+                              color={currencies[Field.INPUT] && currencies[Field.OUTPUT] ? 'primary' : 'text'}
+                            />
+                          </SwitchIconButton>
+                          {recipient === null && !showWrap && isExpertMode ? (
+                            <Button variant="text" id="add-recipient-button" onClick={() => onChangeRecipient('')}>
+                              {t('+ Add a send (optional)')}
+                            </Button>
+                          ) : null}
+                        </AutoRow>
+                      </AutoColumn>
+                      <CurrencyInputPanel
+                        value={formattedAmounts[Field.OUTPUT]}
+                        onUserInput={handleTypeOutput}
+                        label={independentField === Field.INPUT && !showWrap && trade ? t('To (estimated)') : t('To')}
+                        showMaxButton={false}
+                        currency={currencies[Field.OUTPUT]}
+                        onCurrencySelect={handleOutputSelect}
+                        otherCurrency={currencies[Field.INPUT]}
+                        id="swap-currency-output"
+                      />
+                    </AutoColumn>
+                  </Wrapper>
+                </AppBody>
+              </StyledInputCurrencyWrapper>
+            </StyledSwapContainer>
+        </Flex>
+      </Flex>
     </Page>
   )
 }

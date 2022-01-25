@@ -17,6 +17,11 @@ export enum ViewMode {
   CARD = 'CARD',
 }
 
+export enum ChartViewMode {
+  BASIC = 'BASIC',
+  TRADING_VIEW = 'TRADING_VIEW',
+}
+
 export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>('user/updateUserExpertMode')
 export const updateUserSingleHopOnly = createAction<{ userSingleHopOnly: boolean }>('user/updateUserSingleHopOnly')
 export const updateUserSlippageTolerance = createAction<{ userSlippageTolerance: number }>(
@@ -54,3 +59,9 @@ export const updateGasPrice = createAction<{ gasPrice: string }>('user/updateGas
 
 export const addWatchlistToken = createAction<{ address: string }>('user/addWatchlistToken')
 export const addWatchlistPool = createAction<{ address: string }>('user/addWatchlistPool')
+
+export const hidePhishingWarningBanner = createAction<void>('user/hidePhishingWarningBanner')
+
+export const setIsExchangeChartDisplayed = createAction<boolean>('user/toggleIsExchangeChartDisplayed')
+export const setChartViewMode = createAction<ChartViewMode>('user/setChartViewMode')
+export const setSubgraphHealthIndicatorDisplayed = createAction<boolean>('user/setSubgraphHealthIndicatorDisplayed')
