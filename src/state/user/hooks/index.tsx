@@ -3,6 +3,8 @@ import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../../index'
 import {
+  removeSerializedToken,
+  addSerializedToken,
   updateUserSlippageTolerance,
   updateUserSingleHopOnly,
   updateUserExpertMode,
@@ -92,4 +94,24 @@ export function useExchangeChartManager(isMobile: boolean): [boolean, (isDisplay
   )
 
   return [isMobile ? false : isChartDisplayed, setUserChartPreference]
+}
+
+export function useAddUserToken(): (token: Token) => void {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(
+    (token: Token) => {
+      dispatch(addSerializedToken({ serializedToken: serializeToken(token) }))
+    },
+    [dispatch],
+  )
+}
+
+export function useRemoveUserAddedToken(): (chainId: number, address: string) => void {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(
+    (chainId: number, address: string) => {
+      dispatch(removeSerializedToken({ chainId, address }))
+    },
+    [dispatch],
+  )
 }

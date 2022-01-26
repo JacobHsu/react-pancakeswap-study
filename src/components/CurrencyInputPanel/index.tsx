@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { useTranslation } from 'contexts/Localization'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
-// import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
+import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
 import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
 
 import { RowBetween } from '../Layout/Row'
@@ -77,14 +77,14 @@ export default function CurrencyInputPanel({
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
 
-  // const [onPresentCurrencyModal] = useModal(
-  //   <CurrencySearchModal
-  //     onCurrencySelect={onCurrencySelect}
-  //     selectedCurrency={currency}
-  //     otherSelectedCurrency={otherCurrency}
-  //     showCommonBases={showCommonBases}
-  //   />,
-  // )
+  const [onPresentCurrencyModal] = useModal(
+    <CurrencySearchModal
+      onCurrencySelect={onCurrencySelect}
+      selectedCurrency={currency}
+      otherSelectedCurrency={otherCurrency}
+      showCommonBases={showCommonBases}
+    />,
+  )
   return (
     <Box id={id}>
       <Flex mb="6px" alignItems="center" justifyContent="space-between">
@@ -93,7 +93,7 @@ export default function CurrencyInputPanel({
           selected={!!currency}
           onClick={() => {
             if (!disableCurrencySelect) {
-              // onPresentCurrencyModal()
+              onPresentCurrencyModal()
             }
           }}
         >
