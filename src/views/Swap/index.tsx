@@ -21,10 +21,12 @@ import { AutoRow, RowBetween } from '../../components/Layout/Row'
 import { AppHeader, AppBody } from '../../components/App'
 import { useTranslation } from 'contexts/Localization'
 import SwapWarningTokens from 'config/constants/swapWarningTokens'
+import { useCurrency, useAllTokens } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
 import { Field } from '../../state/swap/actions'
 import {
+  useDefaultsFromURLSearch,
   useDerivedSwapInfo,
   useSwapActionHandlers,
   useSwapState,
@@ -64,12 +66,30 @@ const SwitchIconButton = styled(IconButton)`
 
 export default function Swap({ history }: RouteComponentProps) {
   // const router = useRouter()
-  // const loadedUrlParams = useDefaultsFromURLSearch()
+  const loadedUrlParams = useDefaultsFromURLSearch()
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
   const [isChartExpanded, setIsChartExpanded] = useState(false)
   const [userChartPreference, setUserChartPreference] = useExchangeChartManager(isMobile)
   const [isChartDisplayed, setIsChartDisplayed] = useState(userChartPreference)
+
+  // token warning stuff
+  const [loadedInputCurrency, loadedOutputCurrency] = [
+    useCurrency(loadedUrlParams?.inputCurrencyId),
+    useCurrency(loadedUrlParams?.outputCurrencyId),
+  ]
+  const urlLoadedTokens: Token[] = useMemo(
+    () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
+    [loadedInputCurrency, loadedOutputCurrency],
+  )
+
+  // dismiss warning if all imported tokens are in active lists
+  const defaultTokens = useAllTokens()
+  const importTokensNotInDefault =
+    urlLoadedTokens &&
+    urlLoadedTokens.filter((token: Token) => {
+      return !(token.address in defaultTokens)
+    })
 
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
@@ -80,7 +100,7 @@ export default function Swap({ history }: RouteComponentProps) {
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo()
-  
+
   const {
     wrapType,
     execute: onWrap,
@@ -183,6 +203,17 @@ export default function Swap({ history }: RouteComponentProps) {
     },
     [onCurrencySelection],
   )
+
+  // const [onPresentImportTokenWarningModal] = useModal(
+  //   <ImportTokenWarningModal tokens={importTokensNotInDefault} onCancel={() => router.push('/swap')} />,
+  // )
+
+  useEffect(() => {
+    if (importTokensNotInDefault.length > 0) {
+      // onPresentImportTokenWarningModal()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [importTokensNotInDefault.length])
 
   return (
     <Page>
