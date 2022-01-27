@@ -206,7 +206,7 @@ function parseCurrencyFromURLParameter(urlParam: any): string {
     if (urlParam.toUpperCase() === 'BNB') return 'BNB'
     if (valid === false) return 'BNB'
   }
-  return 'BNB' ?? ''
+  return ''
 }
 
 function parseTokenAmountURLParameter(urlParam: any): string {
@@ -283,8 +283,7 @@ export function useDefaultsFromURLSearch():
     )
 
     setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, chainId])
+  }, [dispatch, chainId, parsedQs])
 
   return result
 }
